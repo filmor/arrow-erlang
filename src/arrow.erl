@@ -1,13 +1,17 @@
 -module(arrow).
 
 -export([
-    new_array/2
+    new_array/2,
+    from_list/2,
+    to_list/1
 ]).
 
 -export_type([
     type/0,
     data_type/0
 ]).
+
+-include("crates.hrl").
 
 -type time_unit() :: s | ms | us | ns.
 -type date_unit() :: d | ms.
@@ -31,9 +35,16 @@
 -on_load(init/0).
 
 init() ->
-    {ok, Lib} = find_crate:find_library(arrow, "arrow_nif"),
-    erlang:load_nif(Lib, 0).
+    erlang:load_nif(?crate_arrow_nif, 0).
 
 -spec new_array(Type :: data_type(), Length :: non_neg_integer()) -> {ok, type()} | {error, _}.
 new_array(_Type, _Length) ->
+    erlang:nif_error(nif_not_loaded).
+
+-spec from_list(Type :: data_type(), list()) -> {ok, type()} | {error, _}.
+from_list(_Type, _List) ->
+    erlang:nif_error(nif_not_loaded).
+
+-spec to_list(type()) -> list().
+to_list(_Type) ->
     erlang:nif_error(nif_not_loaded).

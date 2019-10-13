@@ -1,4 +1,6 @@
 mod convert;
+mod buffer;
+
 use convert::decode_type;
 
 use arrow::array::{ ArrayData, ArrayDataRef };
@@ -17,6 +19,8 @@ rustler::rustler_export_nifs! {
     [
         ("new_array", 2, new_array),
         ("to_list", 1, to_list),
+        ("from_binary", 1, from_binary),
+        ("to_binary", 1, to_binary)
     ],
     Some(on_load)
 }
@@ -49,5 +53,15 @@ fn to_list<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let res: ResourceArc<ArrayResource> = args[0].decode()?;
     let _data = &res.data;
 
+    Ok(atoms::ok().encode(env))
+}
+
+
+fn from_binary<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+    Ok(atoms::ok().encode(env))
+}
+
+
+fn to_binary<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     Ok(atoms::ok().encode(env))
 }

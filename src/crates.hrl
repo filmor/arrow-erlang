@@ -1,0 +1,4 @@
+-ifndef(CRATES_HRL).
+-define(CRATES_HRL, 1).
+-define(crate_arrow_nif, undefined).
+-endif.
