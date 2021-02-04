@@ -1,6 +1,6 @@
 [package]
 name = "arrow_nif"
-version = "0.1.0"
+version = "0.1.4+asdf"
 authors = ["Benedikt Reinartz <filmor@gmail.com>"]
 edition = "2018"
 
@@ -10,6 +10,6 @@ path = "src/lib.rs"
 crate-type = ["dylib"]
 
 [dependencies]
-rustler = "0.21"
+rustler = "0.22.0-rc.0"
 lazy_static = "1.4.0"
-arrow = "0.14.1"
+arrow = "3.0.0"

@@ -2,30 +2,31 @@ use arrow::datatypes::{DataType, DateUnit, Field, IntervalUnit, TimeUnit};
 use rustler::types::{Atom, ListIterator};
 use rustler::{Error, Term};
 
+
 mod atoms {
-    rustler::rustler_atoms! {
-        atom ok;
+    rustler::atoms! {
+        ok,
 
-        atom boolean;
-        atom int;
-        atom uint;
-        atom float;
-        atom timestamp;
-        atom date;
-        atom time;
-        atom interval;
-        atom utf8;
-        atom list;
+        boolean,
+        int,
+        uint,
+        float,
+        timestamp,
+        date,
+        time,
+        interval,
+        utf8,
+        list,
 
-        atom s;
-        atom ms;
-        atom us;
-        atom ns;
+        s,
+        ms,
+        us,
+        ns,
 
-        atom d;
+        d,
 
-        atom year_month;
-        atom day_time;
+        year_month,
+        day_time,
     }
 }
 
@@ -68,7 +69,8 @@ pub fn decode_type<'a>(term: Term<'a>) -> Result<DataType, Error> {
 
             if name == atoms::list() {
                 let sub_type = decode_type(modifier)?;
-                return Ok(DataType::List(Box::new(sub_type)));
+                let field =  Field::new("", sub_type, false);
+                return Ok(DataType::List(Box::new(field)));
             }
 
             if name == atoms::timestamp() {
@@ -85,7 +87,7 @@ pub fn decode_type<'a>(term: Term<'a>) -> Result<DataType, Error> {
                     return Err(Error::BadArg);
                 };
 
-                return Ok(DataType::Timestamp(unit));
+                return Ok(DataType::Timestamp(unit, None));
             }
 
             if name == atoms::interval() {
